@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.Structure.repository.TurboMyBatisRepository">
+
+    <select id="findAll" resultType="Turbo" >
+        SELECT c.id,
+        c.marka,
+        c.model,
+        c.year,
+        c.engine,
+        c.ban,
+        c.carinfo
+        FROM turbo_az.car c
+    </select>
+
+    <select id="findById" resultType="Turbo">
+        SELECT <include refid="carBaseColumns"></include>
+        FROM turbo_az.car c
+        <where>
+            c.id = #{id}
+        </where>
+    </select>
+
+    <insert id ="insert">
+        INSERT
+        INTO turbo_az.car (
+        marka,
+        model,
+        year,
+        engine,
+        ban,
+        carinfo)
+        VALUES (#{marka, jdbcType=NVARCHAR},
+        #{model, jdbcType=NVARCHAR},
+        #{year},
+        #{engine},
+        #{ban},
+        #{carinfo})
+    </insert>
+
+    <update id="update">
+        UPDATE turbo_az.car c
+        SET c.marka = #{marka, jdbcType=NVARCHAR},
+        c.model = #{model, jdbcType=NVARCHAR},
+        c.year = #{year},
+        c.engine = #{engine},
+        ban = #{ban},
+        c.carinfo = #{carinfo}
+        <where>
+            c.id = #{id}
+        </where>
+    </update>
+
+    <update id="updateYear">
+        UPDATE turbo_az.car c
+        SET c.year = #{year}
+        <where>
+            c.id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE
+        FROM turbo_az.car c
+        <where>
+            c.id = #{id}
+        </where>
+    </delete>
+
+    <sql id="carBaseColumns">
+        c.id,
+        c.marka,
+        c.model,
+        c.year,
+        c.engine,
+        c.ban,
+        c.carinfo
+    </sql>
+
+</mapper>
